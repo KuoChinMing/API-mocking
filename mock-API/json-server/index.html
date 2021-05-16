@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JSON Server</title>
+  </head>
+  <body>
+    <h1>Hello, json server</h1>
+    <ul class="post-list"></ul>
+
+    <script>
+      const BASE_URL = "http://localhost:3000";
+      // const apiUrl = `${BASE_URL}/posts`;
+      // const apiUrl = `${BASE_URL}/posts?id=1`;
+      const apiUrl = `${BASE_URL}/posts/1?_embed=comments`;
+
+      window.addEventListener("DOMContentLoaded", () => {
+        fetch(apiUrl)
+          .then((res) => res.json())
+          .then((data) => {
+            const postList = document.querySelector(".post-list");
+
+            data = data.comments;
+            data.forEach((post) => {
+              const node = document.createElement("li");
+              const text = document.createTextNode(post.title);
+
+              node.appendChild(text);
+              postList.appendChild(node);
+            });
+          });
+      });
+    </script>
+  </body>
+</html>
